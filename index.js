@@ -11,8 +11,13 @@ async function run() {
         const user = core.getInput("nexus-user")
         const pswd = core.getInput("nexus-password")
 
+        core.info("Authenticating to Nexus repository...")
         spawn.exec('npm set _auth ' + base64encode( `${user}:${pswd}`) )
+
+        core.info("Publishing...")
         spawn.exec('npm publish')
+
+        core.info("The module is successfully published!")
 
     } catch (error) {
         core.setFailed(error.message);
