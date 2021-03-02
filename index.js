@@ -6,7 +6,6 @@ const fs = require('fs')
 const base64encode = (b) => Buffer.from(b).toString('base64');
 const npmrc = "./.npmrc"
 
-
 async function run() {
     try {
 
@@ -16,8 +15,8 @@ async function run() {
         if (fs.existsSync(npmrc)) {
             core.info("Using existing .npmrc")
         } else {
-            core.info("Creating .npmrc configuration ")
-            fs.writeFileSync(npmrc, '???')
+            core.info("Creating .npmrc configuration...")
+            createNpmConfig()
         }
 
 
@@ -35,6 +34,21 @@ async function run() {
     }
 }
 
+function createNpmConfig() {
+
+    const pullRegistry    = core.getInput("nexus-registry")
+    const publishRegistry = core.getInput("nexus-publish-registry")
+    const publishScope    = core.getInput("nexus-publish-scope")
+    const email           = core.getInput("email")
+
+    const config =
+        `registry=${pullRegistry}\n` +
+        `${publishScope}:registry=${publishRegistry}/\n` +
+        `email=${email}`
+
+
+    fs.writeFileSync(npmrc, config)
+}
 
 
 run();

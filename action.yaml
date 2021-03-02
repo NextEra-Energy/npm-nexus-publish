@@ -7,6 +7,19 @@ inputs:
   nexus-password:
     description: Nexus Password
     required: true
+  nexus-registry:
+    description: Nexus registry to pull from
+    default: https://nexus.nee.com/repository/npm-group
+  nexus-publish-registry:
+    description: Nexus registry to publish to
+    default: https://nexus.nee.com/repository/npm-innersource/
+  nexus-publish-scope:
+    description: Publish Scope
+    default: @nextera
+  email:
+    description: Developer email
+    default: eugene.ryzhikov@nee.com
+
 runs:
   using: node12
   main: index.js
