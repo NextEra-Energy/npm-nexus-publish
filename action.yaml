@@ -1,17 +1,17 @@
-name: 'Publish NPM module to Nexus'
-description: 'Publish NPM module to custom Nexus Server'
+name: Publish NPM module to Nexus
+description: Publish NPM module to custom Nexus Server
 inputs:
   nexus-user:
-    description: 'Nexus User Name'
+    description: Nexus User Name
     required: true
     #default: 'Wo'
   nexus-password:
-    description: 'Nexus Password'
+    description: Nexus Password
     required: true
       #default: 'Wo'
-outputs:
+#outputs:
 #  time: # id of output
  #   description: 'The time we greeted you'
 runs:
-  using: 'node12'
-  main: 'index.js'
+  using: node12
+  main: index.js
