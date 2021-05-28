@@ -29,12 +29,12 @@ async function run() {
           console.log(`authenticated ${stdout}`);
         
         core.info("Publishing...")
-        let { stdout, stderr } = await exec('npm publish');
+        let { stdout:pubOut, stderr:pubError} = await exec('npm publish');
 
           if (stderr) {
-            console.error(`error: ${stderr}`);
+            console.error(`error: ${puberr}`);
           }
-          console.log(`Published ${stdout}`);
+          console.log(`Published ${pubout}`);
         
 //         await exec('npm publish')
 
