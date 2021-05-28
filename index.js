@@ -24,17 +24,17 @@ async function run() {
         let { stdout, stderr } = await exec('npm config set _auth=' + base64encode(login));
 
           if (stderr) {
-            console.error(`error: ${stderr}`);
+            console.error('error: ' + JSON.stringify(stderr));
           }
-          console.log(`authenticated ${stdout}`);
+          console.log('authenticated; ' + JSON.stringify(stdout));
         
         core.info("Publishing...")
         let { stdout:pubout, stderr:puberr} = await exec('npm publish');
 
-          if (stderr) {
-            console.error(`error: ${puberr}`);
+          if (puberr) {
+            console.error('error: ' + JSON.stringify(puberr));
           }
-          console.log(`Published ${pubout}`);
+          console.log('Published: ' + JSON.stringify(pubout));
         
 //         await exec('npm publish')
 
