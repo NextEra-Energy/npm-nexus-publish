@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
+// const github = require('@actions/github');
 const spawn  = require('child_process');
 const fs = require('fs')
 
@@ -21,11 +21,8 @@ async function run() {
 
         core.info("Authenticating to Nexus repository...")
         spawn.exec('npm config set _auth=' + Buffer.from(login).toString('base64'))
-        const sender = github.context.payload.sender.login
-        spawn.exec('npm config set init.author.name=' + sender)
-        spawn.exec('npm config get init.author.name')
         core.info("Publishing...")
-        spawn.exec('npm publish')
+        spawn.exec('npm publish --registry https://nexus.nee.com/repository/npm-innersource/')
 
 
         core.info("The module is successfully published!")
