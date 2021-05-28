@@ -20,9 +20,9 @@ async function run() {
         }
 
         core.info("Authenticating to Nexus repository...")
-        spawn.exec('npm config set _auth=' + Buffer.from(login).toString('base64'))
+        await spawn.exec('npm config set _auth=' + Buffer.from(login).toString('base64'))
         core.info("Publishing...")
-        spawn.exec('npm publish --registry https://nexus.nee.com/repository/npm-innersource/')
+        await spawn.exec('npm publish')
 
 
         core.info("The module is successfully published!")
