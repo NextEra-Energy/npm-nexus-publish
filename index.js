@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 // const github = require('@actions/github');
-const spawn  = require('child_process');
+// const spawn  = require('child_process');
+const { exec } = require("child_process");
 const fs = require('fs')
 
 // const base64encode = (b) => Buffer.from(b).toString('base64');
@@ -20,9 +21,9 @@ async function run() {
         }
 
         core.info("Authenticating to Nexus repository...")
-        await spawn.exec('npm config set _auth=' + Buffer.from(login).toString('base64'))
+        await exec('npm config set _auth=' + Buffer.from(login).toString('base64'))
         core.info("Publishing...")
-        await spawn.exec('npm publish')
+        await exec('npm publish')
 
 
         core.info("The module is successfully published!")
