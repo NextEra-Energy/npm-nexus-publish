@@ -29,7 +29,7 @@ async function run() {
 //           console.log('authenticated; ' + JSON.stringify(stdout));
         
         core.info("Publishing...")
-        let { stdout:pubout, stderr:puberr} = await exec('npm publish --registry https://nexus.nee.com/repository/npm-innersource/');
+        let { stdout:pubout, stderr:puberr} = await exec('npm run build && npm publish');
 
 //           if (puberr) {
 //             console.error('error: ' + JSON.stringify(puberr));
