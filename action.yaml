@@ -15,7 +15,7 @@ inputs:
     default: https://nexus.nee.com/repository/npm-innersource/
   nexus-publish-scope:
     description: Publish Scope
-    default: @nextera
+    default: "@nextera"
   email:
     description: Developer email
     default: eugene.ryzhikov@nee.com
