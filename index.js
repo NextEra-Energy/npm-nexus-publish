@@ -3,7 +3,7 @@ const core = require('@actions/core');
 const spawn  = require('child_process');
 const fs = require('fs')
 
-const base64encode = (b) => Buffer.from(b).toString('base64');
+// const base64encode = (b) => Buffer.from(b).toString('base64');
 const npmrc = "./.npmrc"
 
 async function run() {
@@ -20,7 +20,9 @@ async function run() {
         }
 
         core.info("Authenticating to Nexus repository...")
-        spawn.exec('npm config set _auth=' + base64encode( `${user}:${pswd}`) )
+        spawn.exec('npm config set _auth=' + Buffer.from(`${user}:${pswd}`).toString('base64'))
+        const payload = JSON.stringify(github.context.payload, undefined, 2)
+        core.info("payload: " + payload)
         core.info("Publishing...")
         spawn.exec('npm publish')
 
