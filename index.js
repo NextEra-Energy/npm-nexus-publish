@@ -19,10 +19,10 @@ async function run() {
             createNpmConfig()
         }
 
-         spawn.exec('npm config set init.author.name=' + ${{ github.actor }})
+        spawn.exec('npm config set init.author.name=' + ${{ github.actor }})
         core.info("Authenticating to Nexus repository...")
         spawn.exec('npm config set _auth=' + base64encode( `${user}:${pswd}`) )
-
+        core.info('set author to: ' +${{ github.actor }}
         core.info("Publishing...")
         spawn.exec('npm publish')
 
