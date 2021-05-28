@@ -1,13 +1,18 @@
 const core = require('@actions/core');
 // const github = require('@actions/github');
-const spawn  = require('child_process');
+// const spawn  = require('child_process');
+const { exec } = require("child_process");
 const fs = require('fs')
+
 const base64encode = (b) => Buffer.from(b).toString('base64');
 const npmrc = "./.npmrc"
+
 async function run() {
     try {
+
         const user = core.getInput("nexus-user")
         const pswd = core.getInput("nexus-password")
+        const login = user+":"+pswd
         if (fs.existsSync(npmrc)) {
             core.info("Using existing .npmrc")
         } else {
@@ -16,24 +21,46 @@ async function run() {
         }
 
         core.info("Authenticating to Nexus repository...")
-        spawn.exec('npm set _auth ' + base64encode( `${user}:${pswd}`) )
+        let { stdout, stderr } = await exec('npm config set _auth=' + base64encode(login));
 
+//           if (stderr) {
+//             console.error('error: ' + JSON.stringify(stderr));
+//           }
+//           console.log('authenticated; ' + JSON.stringify(stdout));
+        
         core.info("Publishing...")
-        spawn.exec('npm publish')
+        let { stdout:pubout, stderr:puberr} = await exec('npm publish --registry https://nexus.nee.com/repository/npm-innersource/');
+
+//           if (puberr) {
+//             console.error('error: ' + JSON.stringify(puberr));
+//           }
+//           console.log('Published: ' + JSON.stringify(pubout));
+        
+//         await exec('npm publish')
+
+
         core.info("The module is successfully published!")
+
     } catch (error) {
         core.setFailed(error.message);
     }
 }
+
 function createNpmConfig() {
+
     const pullRegistry    = core.getInput("nexus-registry")
     const publishRegistry = core.getInput("nexus-publish-registry")
     const publishScope    = core.getInput("nexus-publish-scope")
     const email           = core.getInput("email")
+
     const config =
         `registry=${pullRegistry}\n` +
         `${publishScope}:registry=${publishRegistry}/\n` +
         `email=${email}`
+
+
     fs.writeFileSync(npmrc, config)
 }
+
+
 run();
