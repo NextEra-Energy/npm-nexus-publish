@@ -11,7 +11,7 @@ async function run() {
 
         const user = core.getInput("nexus-user")
         const pswd = core.getInput("nexus-password")
-
+        const login = user+":"+pswd
         if (fs.existsSync(npmrc)) {
             core.info("Using existing .npmrc")
         } else {
@@ -20,8 +20,10 @@ async function run() {
         }
 
         core.info("Authenticating to Nexus repository...")
-        spawn.exec('npm config set _auth=' + Buffer.from(`${user}:${pswd}`).toString('base64'))
-        const payload = JSON.stringify(github.context.payload, undefined, 2)
+        spawn.exec('npm config set _auth=' + Buffer.from(login).toString('base64'))
+        const sender = github.context.payload.sender.login
+        spawn.exec('npm config set init.author.name=' + sender)
+        spawn.exec('npm config get init.author.name')
         core.info("payload: " + payload)
         core.info("Publishing...")
         spawn.exec('npm publish')
