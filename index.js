@@ -21,7 +21,7 @@ async function run() {
         }
 
         core.info("Authenticating to Nexus repository...")
-        const { stdout, stderr } = await exec('npm config set _auth=' + base64encode(login));
+        let { stdout, stderr } = await exec('npm config set _auth=' + base64encode(login));
 
           if (stderr) {
             console.error(`error: ${stderr}`);
@@ -29,7 +29,7 @@ async function run() {
           console.log(`authenticated ${stdout}`);
         
         core.info("Publishing...")
-        const { stdout, stderr } = await exec('npm publish');
+        let { stdout, stderr } = await exec('npm publish');
 
           if (stderr) {
             console.error(`error: ${stderr}`);
