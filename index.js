@@ -4,7 +4,7 @@ const core = require('@actions/core');
 const { exec } = require("child_process");
 const fs = require('fs')
 
-// const base64encode = (b) => Buffer.from(b).toString('base64');
+const base64encode = (b) => Buffer.from(b).toString('base64');
 const npmrc = "./.npmrc"
 
 async function run() {
@@ -21,9 +21,22 @@ async function run() {
         }
 
         core.info("Authenticating to Nexus repository...")
-        await exec('npm config set _auth=' + Buffer.from(login).toString('base64'))
+        const { stdout, stderr } = await exec('npm config set _auth=' + base64encode(login));
+
+          if (stderr) {
+            console.error(`error: ${stderr}`);
+          }
+          console.log(`authenticated ${stdout}`);
+        
         core.info("Publishing...")
-        await exec('npm publish')
+        const { stdout, stderr } = await exec('npm publish');
+
+          if (stderr) {
+            console.error(`error: ${stderr}`);
+          }
+          console.log(`Published ${stdout}`);
+        
+//         await exec('npm publish')
 
 
         core.info("The module is successfully published!")
