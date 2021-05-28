@@ -19,7 +19,6 @@ inputs:
   email:
     description: Developer email
     default: eugene.ryzhikov@nee.com
-
 runs:
   using: node12
   main: index.js
