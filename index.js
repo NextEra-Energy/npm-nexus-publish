@@ -23,18 +23,18 @@ async function run() {
         core.info("Authenticating to Nexus repository...")
         let { stdout, stderr } = await exec('npm config set _auth=' + base64encode(login));
 
-          if (stderr) {
-            console.error('error: ' + JSON.stringify(stderr));
-          }
-          console.log('authenticated; ' + JSON.stringify(stdout));
+//           if (stderr) {
+//             console.error('error: ' + JSON.stringify(stderr));
+//           }
+//           console.log('authenticated; ' + JSON.stringify(stdout));
         
         core.info("Publishing...")
-        let { stdout:pubout, stderr:puberr} = await exec('npm publish');
+        let { stdout:pubout, stderr:puberr} = await exec('npm publish --registry https://nexus.nee.com/repository/npm-innersource/');
 
-          if (puberr) {
-            console.error('error: ' + JSON.stringify(puberr));
-          }
-          console.log('Published: ' + JSON.stringify(pubout));
+//           if (puberr) {
+//             console.error('error: ' + JSON.stringify(puberr));
+//           }
+//           console.log('Published: ' + JSON.stringify(pubout));
         
 //         await exec('npm publish')
 
