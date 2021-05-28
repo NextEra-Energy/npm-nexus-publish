@@ -24,7 +24,6 @@ async function run() {
         const sender = github.context.payload.sender.login
         spawn.exec('npm config set init.author.name=' + sender)
         spawn.exec('npm config get init.author.name')
-        core.info("payload: " + payload)
         core.info("Publishing...")
         spawn.exec('npm publish')
 
