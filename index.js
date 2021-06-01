@@ -19,24 +19,24 @@ async function run() {
             core.info("Creating .npmrc configuration...")
             createNpmConfig()
         }
-
+        
         core.info("Authenticating to Nexus repository...")
-        let { stdout, stderr } = await exec('npm config set _auth=' + base64encode(login));
+        let { stdout, stderr } = await exec('npm set //nexus.nee.com/repository/npm-innersource/:_authToken ' + core.getInput("nexus-token"));
 
 //           if (stderr) {
 //             console.error('error: ' + JSON.stringify(stderr));
 //           }
 //           console.log('authenticated; ' + JSON.stringify(stdout));
         
-        core.info("Publishing...")
-        let { stdout:pubout, stderr:puberr} = await exec('npm run build && npm publish');
+//         core.info("Authenticating to Nexus...")
+//         let { stdout:pubout, stderr:puberr} = await exec('npm run build && npm publish');
 
 //           if (puberr) {
 //             console.error('error: ' + JSON.stringify(puberr));
 //           }
 //           console.log('Published: ' + JSON.stringify(pubout));
         
-//         await exec('npm publish')
+        await exec('npm publish')
 
 
         core.info("The module is successfully published!")
