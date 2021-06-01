@@ -8,7 +8,7 @@ inputs:
     description: Nexus Password
     required: true
   nexus-token:
-    description: Nexus Auth Token (`npm login`)
+    description: Nexus Auth Token (npm login)
     default:  ${{ secrets.NPM_AUTH_TOKEN }}
   nexus-registry:
     description: Nexus registry to pull from
